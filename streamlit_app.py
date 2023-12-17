@@ -1,12 +1,30 @@
 import streamlit as st
+from transformers import CamembertTokenizer, CamembertForSequenceClassification
+import torch
 
-st.title('Welcome to Our App')
-st.write('This is the home page of our application. You can choose to test the model or see our work.')
+# Load the tokenizer and model
+tokenizer = CamembertTokenizer.from_pretrained('camembert-base')
+model = CamembertForSequenceClassification.from_pretrained('https://huggingface.co/tommilhomme/languagelevel/tree/main/my_model')
 
-if st.button('Test Model'):
-    # Code to handle the 'Test Model' action
-    st.write('You clicked to test the model!')
+st.title('French Sentence Difficulty Predictor')
 
-if st.button('See Our Work'):
-    # Code to handle the 'See Our Work' action
-    st.write('You clicked to see our work!')
+# User input for the sentence
+sentence = st.text_input('Enter a French sentence:')
+
+if sentence:
+    # Tokenize the input sentence
+    inputs = tokenizer(sentence, return_tensors='pt', truncation=True, padding=True)
+
+    # Predict the difficulty level
+    with torch.no_grad():
+        logits = model(**inputs).logits
+
+    # Convert logits to probabilities and then to the corresponding class
+    probs = torch.nn.functional.softmax(logits, dim=-1)
+    prediction = torch.argmax(probs, dim=-1).item()
+
+    # Define a mapping for difficulty levels
+    difficulty_mapping = {0: 'A1', 1: 'A2', 2: 'B1', 3: 'B2', 4: 'C1', 5: 'C2'}
+
+    # Display the predicted difficulty level
+    st.write(f'Predicted difficulty level: {difficulty_mapping[prediction]}')
