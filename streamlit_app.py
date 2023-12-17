@@ -1,4 +1,4 @@
-!pip install accelerate -U
+
 !pip install transformers[torch]
 !pip install sentencepiece
 import streamlit as st
