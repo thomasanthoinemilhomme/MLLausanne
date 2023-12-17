@@ -1,3 +1,6 @@
+!pip install accelerate -U
+!pip install transformers[torch]
+!pip install sentencepiece
 import streamlit as st
 from transformers import CamembertTokenizer, CamembertForSequenceClassification
 import torch
