@@ -1,6 +1,6 @@
-pip install accelerate -U
-pip install transformers[torch]
-pip install sentencepiece
+python -m venv myenv
+source myenv/bin/activate  # On Windows use `myenv\Scripts\activate`
+pip install streamlit transformers
 import streamlit as st
 from transformers import CamembertTokenizer, CamembertForSequenceClassification
 import torch
