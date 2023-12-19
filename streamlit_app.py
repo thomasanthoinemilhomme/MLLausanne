@@ -7,7 +7,7 @@ import gdown
 
 # Function to download and load the model
 def load_model():
-    url = 'https://drive.google.com/file/d/1dyrnb4lsirtcFFDnuu6-wlmfmTKmJu0u/view?usp=drive_link'
+    url = 'https://drive.google.com/uc?id=1dyrnb4lsirtcFFDnuu6-wlmfmTKmJu0u'
     output = 'my_model.zip'
     gdown.download(url, output, quiet=False)
 
