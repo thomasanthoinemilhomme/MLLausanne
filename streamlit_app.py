@@ -25,7 +25,7 @@ st.set_page_config(page_title="Language Level Detector", page_icon="🇫🇷")
 
 # Title and project description
 st.title("Detecting Language Level in French Sentences")
-st.markdown("## Project conducted by Team Lausanne with Leo Andrad and Thomas Anthoine-Milhomme")
+st.markdown("## Project conducted by Team Lausanne with Leo Andrade and Thomas Anthoine-Milhomme")
 
 # User input
 user_input = st.text_input("Enter a French sentence to analyze its language level:")
