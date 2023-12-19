@@ -9,19 +9,14 @@ import gdown
 def load_model():
     url = 'https://drive.google.com/file/d/1dyrnb4lsirtcFFDnuu6-wlmfmTKmJu0u/view?usp=drive_link'
     output = 'my_model.zip'
-    if not os.path.exists(output):
-        gdown.download(url, output, quiet=False)
-
-    # Check if the downloaded file is a zip file
-    if not zipfile.is_zipfile(output):
-        raise Exception("Downloaded file is not a zip file or download failed")
+    gdown.download(url, output, quiet=False)
 
     # Extract the model
-    try:
-        with zipfile.ZipFile(output, 'r') as zip_ref:
-            zip_ref.extractall('my_model')
-    except zipfile.BadZipFile:
-        raise Exception("Failed to unzip the model file. The file might be corrupted.")
+    import zipfile
+    with zipfile.ZipFile(output, 'r') as zip_ref:
+        zip_ref.extractall('my_model')
+
+    # Load the model
     model = CamembertForSequenceClassification.from_pretrained('my_model')
     return model
 
