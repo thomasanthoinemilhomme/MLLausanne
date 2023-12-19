@@ -4,11 +4,7 @@ import pandas as pd
 import torch
 from transformers import CamembertTokenizer, CamembertForSequenceClassification
 import gdown
-try:
-    import sentencepiece
-    st.write("SentencePiece is installed.")
-except ImportError:
-    st.write("SentencePiece is not installed.")
+import sentencepiece
 # Function to download and load the model
 def load_model():
     url = 'https://drive.google.com/uc?id=1dyrnb4lsirtcFFDnuu6-wlmfmTKmJu0u'
