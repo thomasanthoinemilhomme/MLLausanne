@@ -1,4 +1,4 @@
-
+import os
 import streamlit as st
 import pandas as pd
 import torch
@@ -9,14 +9,19 @@ import gdown
 def load_model():
     url = 'https://drive.google.com/drive/folders/1wmxeEpWoQnzCBBRyzstq2BxmSRNE1AHf'
     output = 'my_model.zip'
-    gdown.download(url, output, quiet=False)
+    if not os.path.exists(output):
+        gdown.download(url, output, quiet=False)
+
+    # Check if the downloaded file is a zip file
+    if not zipfile.is_zipfile(output):
+        raise Exception("Downloaded file is not a zip file or download failed")
 
     # Extract the model
-    import zipfile
-    with zipfile.ZipFile(output, 'r') as zip_ref:
-        zip_ref.extractall('my_model')
-
-    # Load the model
+    try:
+        with zipfile.ZipFile(output, 'r') as zip_ref:
+            zip_ref.extractall('my_model')
+    except zipfile.BadZipFile:
+        raise Exception("Failed to unzip the model file. The file might be corrupted.")
     model = CamembertForSequenceClassification.from_pretrained('my_model')
     return model
 
