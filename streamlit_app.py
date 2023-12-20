@@ -6,6 +6,7 @@ from transformers import CamembertTokenizer, CamembertForSequenceClassification
 import gdown
 import sentencepiece
 # Function to download and load the model
+@st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def load_model():
     url = 'https://drive.google.com/uc?id=1dyrnb4lsirtcFFDnuu6-wlmfmTKmJu0u'
     output = 'my_model.zip'
@@ -57,5 +58,7 @@ if user_input:
     difficulty_mapping = {0: 'A1', 1: 'A2', 2: 'B1', 3: 'B2', 4: 'C1', 5: 'C2'}
     predicted_level = difficulty_mapping[torch.argmax(prediction).item()]
     st.write(f"The predicted language level for this sentence is: **{predicted_level}**")
-if predicted_level in advice_for_level:
+
+    # Display advice
+    if predicted_level in advice_for_level:
         st.write(f"Advice to reach the next level: {advice_for_level[predicted_level]}")
