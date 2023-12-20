@@ -19,6 +19,14 @@ def load_model():
     # Load the model
     model = CamembertForSequenceClassification.from_pretrained('my_model')
     return model
+advice_for_level = {
+    'A1': "Try to use more complex sentences and richer vocabulary.",
+    'A2': "Incorporate varied grammatical structures and verb tenses.",
+    'B1': "Use more idiomatic expressions and expand your range of vocabulary.",
+    'B2': "Focus on refining your sentence structure and using more nuanced expressions.",
+    'C1': "Practice using subjunctive moods and more sophisticated conjunctions.",
+    'C2': "Polish your language by mastering subtle linguistic nuances and advanced vocabulary."
+}
 
 # Streamlit page configuration
 st.set_page_config(page_title="Language Level Detector", page_icon="🇫🇷")
@@ -49,3 +57,5 @@ if user_input:
     difficulty_mapping = {0: 'A1', 1: 'A2', 2: 'B1', 3: 'B2', 4: 'C1', 5: 'C2'}
     predicted_level = difficulty_mapping[torch.argmax(prediction).item()]
     st.write(f"The predicted language level for this sentence is: **{predicted_level}**")
+if predicted_level in advice_for_level:
+        st.write(f"Advice to reach the next level: {advice_for_level[predicted_level]}")
